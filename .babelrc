@@ -1,0 +1,8 @@
+{
+//  "presets" :["env", "react",["@emotion/babel-preset-css-prop",
+//    {
+//      "sourceMap": false
+//    }]],
+  "presets" :["env", "react"],
+  "plugins":["emotion", "transform-inline-environment-variables"]
+}
