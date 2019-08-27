@@ -8,6 +8,7 @@ import Jumbotron from "react-bootstrap/Jumbotron";
 import Main from "./components/main";
 import Banner from "./components/banner";
 import Footer from "./components/Footer";
+import ErrorBoundary from "./components/ErrorBoundary";
 
 class App extends React.Component {
     render() {
@@ -53,14 +54,16 @@ class App extends React.Component {
                font-size:1rem;
                }
                 `} />
-           <div fluid={true}>
+           <div>
                <Header />
                <NavBar />
+               <ErrorBoundary>
                <Main />
+               </ErrorBoundary>
                <Banner />
                <Footer />
                 <div className="aviStuff">
-                    Built for demo purposes by avi@aravindh.me
+                    Demo built by avi@aravindh.me
                 </div>
            </div>
             </div>
