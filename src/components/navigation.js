@@ -50,9 +50,7 @@ class NavBar extends React.Component{
     render()
     {
         return(
-            <Container>
-                <Row>
-            <Col>
+
                 <div css={navBar}>
                     <div css={navGroup}>
                         <NavLink css={navItem} to="/">Home</NavLink>
@@ -63,9 +61,7 @@ class NavBar extends React.Component{
 
                     </div>
                 </div>
-            </Col>
-                </Row>
-            </Container>
+
         )
     }
 }

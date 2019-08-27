@@ -1,6 +1,8 @@
 import React from 'react';
 import Welcome from "./welcome";
 import Usp from "./usp";
+import Featured from "./Featured";
+
 
 class Home extends React.Component{
     render(){
@@ -8,6 +10,8 @@ class Home extends React.Component{
             <div>
               <Welcome />
               <Usp />
+              <Featured />
+
               </div>
 
         );

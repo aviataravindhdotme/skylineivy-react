@@ -6,6 +6,8 @@ import { Global, css} from '@emotion/core';
 import NavBar from "./components/navigation";
 import Jumbotron from "react-bootstrap/Jumbotron";
 import Main from "./components/main";
+import Banner from "./components/banner";
+import Footer from "./components/Footer";
 
 class App extends React.Component {
     render() {
@@ -16,8 +18,10 @@ class App extends React.Component {
                 margin:0;
                 padding-top:25px;
                 width:100vw;
-                font-family: "PT Serif",-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,sans-serif;
-                font-size:16px;       
+                overflow-x:hidden;
+                font-family: Montserrat,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,sans-serif;
+                font-size:16px;     
+                box-sizing:border-box;   
                 }
                 h1{
                 font-size:2.5rem;
@@ -37,13 +41,28 @@ class App extends React.Component {
                 font-size:0.75rem;
                 }
                .navItemActive{
-               color:#d96528;
+               color:#d96528;}
+               .aviStuff{
+               width:100vw;
+                display:flex;
+                justify-content:center;
+                align-items:center;
+                height:40px;            
+               color:white;
+               background:black;
+               font-size:1rem;
+               }
                 `} />
-           <Container fluid={true}>
+           <div fluid={true}>
                <Header />
                <NavBar />
                <Main />
-           </Container>
+               <Banner />
+               <Footer />
+                <div className="aviStuff">
+                    Built for demo purposes by avi@aravindh.me
+                </div>
+           </div>
             </div>
         );
     }
