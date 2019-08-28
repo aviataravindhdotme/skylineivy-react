@@ -5,7 +5,7 @@ import Shoe from './shoe1.jpg';
 
 const welcomeContainer=css`
 width:80vw;
-
+justify-content:center;
 margin-left:10vw;
 display:grid;
 grid-template-columns:50px 100px 1fr;

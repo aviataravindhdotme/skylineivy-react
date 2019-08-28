@@ -1,8 +1,9 @@
 /** @jsx jsx */
-import React from 'react';
-import {Container, Row, Col} from "react-bootstrap";
+import React, {useState} from 'react';
+import {Badge} from "react-bootstrap";
 import { css, jsx} from '@emotion/core';
 import { Link } from '@reach/router';
+
 
 const navBar=css`
 margin-top:30px;
@@ -31,11 +32,19 @@ list-style-type:none;
 padding:0 20px;
 cursor:pointer;
 font-size:0.75rem;
-:hover{
+&:hover{
 color:#d96528
+}
+&:last-child{
+position:relative;
 }
 `;
 
+const cartCountCSS=css`
+
+top:50%;
+left:35px;
+`;
 const isCurrent = ({isCurrent}) => {
     return isCurrent?{className:"navItemActive"}: {className: "navItem"}
 }
@@ -45,11 +54,10 @@ const NavLink = props => (
 
 );
 
-class NavBar extends React.Component{
+const NavBar= () => {
+    const [cartCount, setCartCount] = useState(0);
 
-    render()
-    {
-        return(
+    return(
 
                 <div css={navBar}>
                     <div css={navGroup}>
@@ -57,13 +65,13 @@ class NavBar extends React.Component{
                         <NavLink css={navItem} to="/All">All</NavLink>
                         <NavLink css={navItem} to="/Men">Men</NavLink>
                         <NavLink css={navItem} to="/Women">Women</NavLink>
-                        <NavLink css={navItem} to="/Cart">Cart</NavLink>
+                        <NavLink css={navItem} to="/Cart">Cart <Badge css={cartCountCSS} variant="light">{cartCount}</Badge></NavLink>
 
                     </div>
                 </div>
 
         )
-    }
+
 }
 
 export default NavBar;
