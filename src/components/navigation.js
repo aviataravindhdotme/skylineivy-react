@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Badge} from "react-bootstrap";
 import { css, jsx} from '@emotion/core';
 import { Link } from '@reach/router';
@@ -56,6 +56,11 @@ const NavLink = props => (
 
 const NavBar= () => {
     const [cartCount, setCartCount] = useState(0);
+    const [showCartCount, setShowCartCount] =useState(false);
+
+ useEffect(()=> {
+     setShowCartCount(cartCount > 0)
+ },[cartCount])
 
     return(
 
@@ -65,9 +70,12 @@ const NavBar= () => {
                         <NavLink css={navItem} to="/All">All</NavLink>
                         <NavLink css={navItem} to="/Men">Men</NavLink>
                         <NavLink css={navItem} to="/Women">Women</NavLink>
-                        <NavLink css={navItem} to="/Cart">Cart <Badge css={cartCountCSS} variant="light">{cartCount}</Badge></NavLink>
+                        <NavLink css={navItem} to="/Cart">Cart {(showCartCount)&&<Badge css={cartCountCSS} variant="light">{cartCount}</Badge>}</NavLink>
 
                     </div>
+                    <button onClick={()=>setCartCount(cartCount+1)}>Add</button>
+                    <button onClick={()=>setCartCount(cartCount-1)}>Remove</button>
+
                 </div>
 
         )

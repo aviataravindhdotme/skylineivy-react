@@ -10,7 +10,11 @@ import Banner from "./components/banner";
 import Footer from "./components/Footer";
 import ErrorBoundary from "./components/ErrorBoundary";
 
+
 class App extends React.Component {
+
+
+
     render() {
         return (
             <div>
@@ -56,10 +60,13 @@ class App extends React.Component {
                 `} />
            <div>
                <Header />
+
                <NavBar />
+
                <ErrorBoundary>
                <Main />
-               </ErrorBoundary>
+  </ErrorBoundary>
+
                <Banner />
                <Footer />
                 <div className="aviStuff">

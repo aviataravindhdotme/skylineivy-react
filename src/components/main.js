@@ -4,7 +4,6 @@ import { css, jsx} from '@emotion/core';
 import {Router } from '@reach/router';
 import Home from "./Home/home";
 
-
 const mainContainer=css`
 width:100vw;
 `;
@@ -12,8 +11,10 @@ width:100vw;
 
 class Main extends React.Component{
     render(){
+        let cartCount = this.context;
         return(
             <div css={mainContainer}>
+
                 <Router>
                     <Home path="/" />
                 </Router>
@@ -21,5 +22,4 @@ class Main extends React.Component{
         );
     }
 }
-
 export default Main;
