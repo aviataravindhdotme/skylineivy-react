@@ -1,12 +1,13 @@
 /** @jsx jsx */
 import React from 'react';
 import { css, jsx} from '@emotion/core';
-import Shoe from './shoe1.jpg';
+import Shoe from '../../../public/shoe1.jpg';
+// import Images from '../../../public';
 
 const welcomeContainer=css`
 width:80vw;
 justify-content:center;
-margin-left:10vw;
+margin-left:10vw; 
 display:grid;
 grid-template-columns:50px 100px 1fr;
 grid-template-rows:50px 50px 100px 20px 1fr;
@@ -43,6 +44,7 @@ font-size:0.75rem;
 
 
 class Welcome extends React.Component{
+
     render(){
         return(
           <div css={welcomeContainer}>
@@ -52,7 +54,6 @@ class Welcome extends React.Component{
               <div css={textArea3}>Street Style New fashion</div>
 
               <img css={imageContainer} src={Shoe} />
-
           </div>
         );
     }
