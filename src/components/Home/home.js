@@ -1,7 +1,7 @@
 import React from 'react';
 import Welcome from "./welcome";
 import Usp from "./usp";
-import Featured from "./Featured";
+import Featured from "../Shared/Featured";
 
 
 class Home extends React.Component{
@@ -11,7 +11,6 @@ class Home extends React.Component{
               <Welcome />
               <Usp />
               <Featured />
-
               </div>
 
         );

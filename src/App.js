@@ -27,12 +27,22 @@ class App extends React.Component {
                 font-family: Montserrat,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,sans-serif;
                 font-size:16px;     
                 box-sizing:border-box;   
-                }
-                h1{
-                font-size:2.5rem;
-                font-weight:500;
+                
                 line-height:1.4;
-                }    
+                word-spacing:1px;
+                }
+                h1,h2, h3{
+                font-family: "PT Serif",-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,sans-serif;
+                font-weight: 400;
+                font-size:1.17rem;
+              
+                }   
+                h1{
+                font-size:40px;
+                } 
+                h2{
+                font-size:1.5rem;
+                }
                 .center-align{
                 display:flex;
                 justify-content:center;

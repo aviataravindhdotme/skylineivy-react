@@ -5,7 +5,7 @@ import Watch1 from "../../../images/products/watch1.jpg";
 import Watch2 from "../../../images/products/watch2.jpg";
 import Watch3 from "../../../images/products/watch3.jpg";
 import Calendar from "../../../images/calendar.svg";
-import ProductTile from "../Shared/productTile";
+import ProductTile from "./productTile";
 import StoreData from "../../../storedata";
 
 const featuredContainer=css`
@@ -14,9 +14,7 @@ width:80vw;
 margin-left:10vw;
 text-align:center;
 overflow:hidden;
-
 `;
-
 
 const featuredTitle=css`
 width:100%;
@@ -58,7 +56,7 @@ class Featured extends React.Component{
         }
     }
 render() {
-        console.log(this.state.storeData);
+
     return(
         <div css={featuredContainer}>
             <div css={featuredTitle}>

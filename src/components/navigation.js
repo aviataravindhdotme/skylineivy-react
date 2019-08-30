@@ -71,11 +71,7 @@ const NavBar= () => {
                         <NavLink css={navItem} to="/Men">Men</NavLink>
                         <NavLink css={navItem} to="/Women">Women</NavLink>
                         <NavLink css={navItem} to="/Cart">Cart {(showCartCount)&&<Badge css={cartCountCSS} variant="light">{cartCount}</Badge>}</NavLink>
-
                     </div>
-                    <button onClick={()=>setCartCount(cartCount+1)}>Add</button>
-                    <button onClick={()=>setCartCount(cartCount-1)}>Remove</button>
-
                 </div>
 
         )

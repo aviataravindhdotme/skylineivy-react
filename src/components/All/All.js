@@ -4,14 +4,16 @@ import React, {useState, useEffect} from 'react';
 import {css,jsx} from '@emotion/core';
 import StoreData from '../../../storedata';
 import ProductTile from "../Shared/productTile";
+import Slider from 'react-rangeslider';
+import 'react-rangeslider/lib/index.css'
 
 const allContainer=css`
 width:80vw;
-margin-left:10vw;
+margin-left:5vw;
 margin-top:50px;
 display:grid;
 grid-template-columns:75% 25%;
-grid-column-gap:25px;
+grid-column-gap:15px;
 `;
 
 const productsContainer=css`
@@ -24,39 +26,59 @@ grid-row-gap:20px;
 `;
 
 const filterContainer=css`
-border:1px solid red;
-height:200px`
+`
+
+const filterContentSlider = css`
+border:1px solid green;
+`;
 
 const All = (props) =>{
-    console.log(props.gender);
-    // const [storeData, storeDataUpdate] = useState(props.gender !=='All'? StoreData.filter((p)=>p.gender == props.gender) : StoreData);
-    const [storeData, storeDataUpdate] = useState(StoreData);
+
+	const [storeData, setStoreData] = useState(StoreData);
+
+	const [priceRange, setPriceRange] = useState(Math.max(...StoreData.map(s => s.price)));
 
 
-    useEffect(()=>{
-        if(props.gender==="Male"){
-            storeDataUpdate(storeData.filter(p=>p.gender === props.gender))
-        }
-    },[]);
+	function onSliderChange(value) {
+	setPriceRange(value)
+	}
 
-    console.log("All "+props.gender + StoreData.length);
-    console.log("All "+props.gender + storeData.length);
+	function formatPriceRange(value){
+		return ("$"+value);
+	}
 
-    return(
-        <div css={allContainer}>
-            <div css={productsContainer}>
-                {storeData.map((p)=>{
-                    return(
-                        <ProductTile product={p} key={p.id} />
-                    )
-                })}
-            </div>
+	useEffect(()=>{
+		onSliderChange(Math.max(...StoreData.map(s => s.price)));
+	},[props.gender])
 
-            <div css={filterContainer}>
-            </div>
+	return(
+		<div css={allContainer}>
+			<div css={productsContainer}>
+				{storeData.map((p)=>{
+					if((props.gender === "All") &&(p.price<=priceRange)) {
+						return (
+							<ProductTile product={p} key={p.id} />
+						)
+					} else if((p.gender === props.gender) && (p.price<=priceRange)) {
+						return (
+							<ProductTile product={p} key={p.id} />
+						)
+					}
+				})}
+			</div>
 
-        </div>
-    )
+			<div css={filterContainer}>
+				<h3>Special Sale</h3>
+				<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam libero iusto nemo laboriosam perferendis voluptas ullam officiis, quibusdam quas quam eveniet est fugit delectus corporis incidunt nam esse suscipit itaque?</p>
+				<h3>Filter by Price:</h3>
+				<p>Max Price: <strong>${priceRange}</strong></p>
+				<Slider css={filterContentSlider} min={0} max={200} step={0.25} value={priceRange}
+						onChange={onSliderChange} format={formatPriceRange} labels={{0:`$0`, 100:`$100`, 200:`$200`}}/>
+
+			</div>
+
+		</div>
+	)
 }
 
 export default All;

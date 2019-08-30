@@ -22,6 +22,9 @@
     "react": "^16.9.0",
     "react-bootstrap": "^1.0.0-beta.12",
     "react-dom": "^16.9.0",
+    "react-numeric-input": "^2.2.3",
+    "react-rangeslider": "^2.2.0",
+    "react-svg-star-rating": "^1.0.2",
     "styled-components": "^4.3.2"
   },
   "devDependencies": {

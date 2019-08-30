@@ -2,6 +2,8 @@
 
 import React from 'react';
 import {css, jsx} from '@emotion/core';
+import StarRating from "react-svg-star-rating";
+import {Link} from "@reach/router";
 
 const imgApi = "https://res.cloudinary.com/du7a4xfua/image/upload/v1567100881/"
 
@@ -60,21 +62,31 @@ color:white;
 
 const ProductTile = (props) => {
 
-    const {id, name, price, starrating, img} = props.product;
+    const {id, name, price, starrating, img, gender} = props.product;
+    const productLink="/view/"+id;
+
     return(
         <div css={productTileContainer}>
                <div css={productTileContent}>
                     <img height="200px" width="200px" src={imgApi+img} />
 
                 </div>
+            <div css={productTileContent}>
+               <StarRating size={15} count={5} innerRadius={20}
+                           activeColor={"#000"}
+                           isReadOnly
+                           initialRating={starrating}  />
+
+
+            </div>
                 <div css={[productTileContent,productTileHeader]}>
-                    <h4>{name}</h4>
+                    <h4>{gender}</h4>
                 </div>
                 <div css={[productTileContent,productTilePrice]}>
                     <h5>${price}</h5>
                 </div>
                 <div css={productTileContent}>
-                    <a href="#" css={productTileLink}>View Item ></a>
+                    <Link to="/view" state={props.product} css={productTileLink}>View Item ></Link>
                 </div>
 
         </div>
