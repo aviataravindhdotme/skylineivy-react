@@ -1,9 +1,9 @@
 /** @jsx jsx */
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {Badge} from "react-bootstrap";
 import { css, jsx} from '@emotion/core';
 import { Link } from '@reach/router';
-
+import {CartContext} from '../Context';
 
 const navBar=css`
 margin-top:30px;
@@ -55,7 +55,9 @@ const NavLink = props => (
 );
 
 const NavBar= () => {
-    const [cartCount, setCartCount] = useState(0);
+    const cartState =useContext(CartContext);
+    console.log("cartState" + cartState.count);
+    const [cartCount, setCartCount] = useState(cartState.count);
     const [showCartCount, setShowCartCount] =useState(false);
 
  useEffect(()=> {

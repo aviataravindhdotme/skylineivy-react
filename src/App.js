@@ -9,6 +9,7 @@ import Main from "./components/main";
 import Banner from "./components/banner";
 import Footer from "./components/Footer";
 import ErrorBoundary from "./components/ErrorBoundary";
+import {CartProvider} from "../src/Context";
 
 
 class App extends React.Component {
@@ -17,6 +18,7 @@ class App extends React.Component {
 
     render() {
         return (
+            <CartProvider>
             <div>
                 <Global styles={css`
                 html,body{
@@ -70,20 +72,18 @@ class App extends React.Component {
                 `} />
            <div>
                <Header />
-
                <NavBar />
-
                <ErrorBoundary>
-               <Main />
-  </ErrorBoundary>
-
+                   <Main />
+               </ErrorBoundary>
                <Banner />
                <Footer />
                 <div className="aviStuff">
                     Demo built by avi@aravindh.me
                 </div>
-           </div>
+               </div>
             </div>
+            </CartProvider>
         );
     }
 }

@@ -4,5 +4,5 @@
 //      "sourceMap": false
 //    }]],
   "presets" :["env", "react"],
-  "plugins":["emotion", "transform-inline-environment-variables"]
+  "plugins":["emotion", "transform-inline-environment-variables", "transform-class-properties"]
 }
