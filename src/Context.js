@@ -1,30 +1,83 @@
 import React, {useReducer} from 'react';
+
 const reducer = (state, action) => {
+    let newCartItems = state.cartItems;
     switch (action.type) {
         case "Add":{
-            const newState = Object.assign({},
-                state,
-                {cartTotal:state.cartTotal+1},
-                {cartItems: state.cartItems.push({id:payload.id, state.cartTotal+1})};
+            if(!state.cartItems.find(x=>x.id === action.payload.id)){
+                let newItem = {id:action.payload.id, count:action.payload.count};
+                newCartItems.push(newItem);
 
-            return newState;
-        }
+            } else{
+               newCartItems.map((x)=>{
+                   if(x.id === action.payload.id){
+                       x.count = x.count + action.payload.count;
 
+                   }
+               });
+
+            }
+            return Object.assign({},
+                state, {cartTotal: state.cartTotal+action.payload.count, cartItems:newCartItems} );
+
+}
         case "Remove":{
-            const newState = Object.assign({},
-                state, {cartTotal:state.cartTotal>0? state.cartTotal-1: 0});
-            return newState;
+
+            newCartItems.map((x) =>{
+                if(x.id === action.payload.id){
+                    x.count = x.count - action.payload.count;
+                }
+            });
+            newCartItems = newCartItems.filter((x) => x.count> 0);
+
+            return Object.assign({},
+                state, {
+                     cartTotal: state.cartTotal-action.payload.count>0?state.cartTotal-action.payload.count:0,
+                    cartItems:newCartItems
+            } );
+
         }
+
+        case "update":{
+            console.log(action);
+            let newTotal=state.cartTotal;
+            newCartItems.map((x)=>{
+                if(x.id === action.payload.id){
+                    if(x.count > action.payload.count){
+                        newTotal -=action.payload.count;
+                    } else {
+                        newTotal += action.payload.count;
+                    }
+
+                    x.count = action.payload.count;
+
+                }
+            });
+
+            if(!(newCartItems.find(x=>x.id===action.payload.id))){
+                let newItem = {id:action.payload.id, count:action.payload.count};
+                newCartItems.push(newItem);
+                newTotal = newTotal + action.payload.count;
+            }
+
+            newCartItems = newCartItems.filter((x) => x.count> 0);
+
+            return Object.assign({},
+                state, {
+                    cartTotal: newTotal,
+                    cartItems:newCartItems
+                } );
+        }
+
+
         default:
             return;
     }
 };
 
-const initialCart = {cartTotal: 5, cartItems:[{
-    id:"fa86b1c-9ebf-4555-987f-7b8bf7d27be7",
-        count:5
-    }]};
+const initialCart = {cartTotal: 0, cartItems:[]};
 
+const cartTotal = 5;
 const CartContext= React.createContext(initialCart);
 
 function CartProvider(props){

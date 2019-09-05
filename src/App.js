@@ -19,8 +19,8 @@ class App extends React.Component {
     render() {
         return (
             <CartProvider>
-            <div>
-                <Global styles={css`
+                <div>
+                    <Global styles={css`
                 html,body{
                 margin:0;
                 padding-top:25px;
@@ -69,20 +69,20 @@ class App extends React.Component {
                background:black;
                font-size:1rem;
                }
-                `} />
-           <div>
-               <Header />
-               <NavBar />
-               <ErrorBoundary>
-                   <Main />
-               </ErrorBoundary>
-               <Banner />
-               <Footer />
-                <div className="aviStuff">
-                    Demo built by avi@aravindh.me
+                `}/>
+                    <div>
+                        <Header/>
+                        <NavBar/>
+                        <ErrorBoundary>
+                            <Main/>
+                        </ErrorBoundary>
+                        <Banner/>
+                        <Footer/>
+                        <div className="aviStuff">
+                            Demo built by avi@aravindh.me
+                        </div>
+                    </div>
                 </div>
-               </div>
-            </div>
             </CartProvider>
         );
     }

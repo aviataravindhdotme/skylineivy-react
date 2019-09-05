@@ -55,14 +55,10 @@ const NavLink = props => (
 );
 
 const NavBar= () => {
-    const cartState =useContext(CartContext);
-    console.log("cartState" + cartState.count);
-    const [cartCount, setCartCount] = useState(cartState.count);
-    const [showCartCount, setShowCartCount] =useState(false);
+    const {state, dispatch}  =useContext(CartContext);
+    console.log("cartState" + JSON.stringify(state));
 
- useEffect(()=> {
-     setShowCartCount(cartCount > 0)
- },[cartCount])
+
 
     return(
 
@@ -72,7 +68,12 @@ const NavBar= () => {
                         <NavLink css={navItem} to="/All">All</NavLink>
                         <NavLink css={navItem} to="/Men">Men</NavLink>
                         <NavLink css={navItem} to="/Women">Women</NavLink>
-                        <NavLink css={navItem} to="/Cart">Cart {(showCartCount)&&<Badge css={cartCountCSS} variant="light">{cartCount}</Badge>}</NavLink>
+                        <NavLink css={navItem} to="/Cart">
+                            Cart {(state.cartTotal >0)&&
+                            <Badge css={cartCountCSS} variant="light">
+                                {state.cartTotal}
+                            </Badge>}
+                        </NavLink>
                     </div>
                 </div>
 
