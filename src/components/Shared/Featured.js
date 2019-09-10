@@ -60,7 +60,7 @@ render() {
     return(
         <div css={featuredContainer}>
             <div css={featuredTitle}>
-                <h4><span>Featured Products</span></h4>
+                <h4 ><span>Featured Products</span></h4>
             </div>
 
             <div css={featuredItemsRow}>

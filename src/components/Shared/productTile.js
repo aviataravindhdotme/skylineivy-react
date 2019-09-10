@@ -13,6 +13,10 @@ display:flex;
 flex-direction:column;
 justify-content:center;
 align-items:center;
+border: 1px solid #eee2dc;
+box-shadow: 0 3px 10px 0 #eee;
+border-radius:40px;
+padding:10px 20px 30px;
 @media only screen 
   and (min-device-width: 375px) 
   and (max-device-width: 812px) 
@@ -67,7 +71,7 @@ const ProductTile = (props) => {
     return (
         <div css={productTileContainer}>
             <div css={productTileContent}>
-                <img height="200px" width="200px" src={imgApi + img}/>
+                <img height="244px" width="244px" src={imgApi + img}/>
 
             </div>
             <div css={productTileContent}>
