@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Container} from 'react-bootstrap';
 import Header from './components/header';
-import { Global, css} from '@emotion/core';
+import {Global, css} from '@emotion/core';
 import NavBar from "./components/navigation";
 import Jumbotron from "react-bootstrap/Jumbotron";
 import Main from "./components/main";
@@ -13,7 +13,6 @@ import {CartProvider} from "../src/Context";
 
 
 class App extends React.Component {
-
 
 
     render() {
@@ -88,4 +87,4 @@ class App extends React.Component {
     }
 }
 
-export default  App;
+export default App;

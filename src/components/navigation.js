@@ -56,9 +56,6 @@ const NavLink = props => (
 
 const NavBar= () => {
     const {state, dispatch}  =useContext(CartContext);
-    console.log("cartState" + JSON.stringify(state));
-
-
 
     return(
 

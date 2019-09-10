@@ -7,7 +7,7 @@ import {Link} from "@reach/router";
 
 const imgApi = "https://res.cloudinary.com/du7a4xfua/image/upload/v1567100881/"
 
-const productTileContainer=css`
+const productTileContainer = css`
 min-height:300px;
 display:flex;
 flex-direction:column;
@@ -31,7 +31,7 @@ justify-content:center;
 margin-bottom:5px;
 `;
 
-const productTileHeader=css`
+const productTileHeader = css`
 width:50%;
 text-transform:uppercase;
 letter-spacing:.15rem;
@@ -40,12 +40,12 @@ text-align:center;
 `;
 
 
-const productTilePrice=css`
+const productTilePrice = css`
 line-height:1.4;
 word-spacing:1px;
 color:#d96528;
 `;
-const productTileLink=css`
+const productTileLink = css`
 
 cursor:pointer;
 font-weight:bold;
@@ -59,35 +59,34 @@ color:white;
 `;
 
 
-
 const ProductTile = (props) => {
 
     const {id, name, price, starrating, img, gender} = props.product;
-    const productLink="/view/"+id;
+    const productLink = "/view/" + id;
 
-    return(
+    return (
         <div css={productTileContainer}>
-               <div css={productTileContent}>
-                    <img height="200px" width="200px" src={imgApi+img} />
-
-                </div>
             <div css={productTileContent}>
-               <StarRating size={15} count={5} innerRadius={20}
-                           activeColor={"#000"}
-                           isReadOnly
-                           initialRating={starrating}  />
+                <img height="200px" width="200px" src={imgApi + img}/>
+
+            </div>
+            <div css={productTileContent}>
+                <StarRating size={15} count={5} innerRadius={20}
+                            activeColor={"#000"}
+                            isReadOnly
+                            initialRating={starrating}/>
 
 
             </div>
-                <div css={[productTileContent,productTileHeader]}>
-                    <h4>{gender}</h4>
-                </div>
-                <div css={[productTileContent,productTilePrice]}>
-                    <h5>${price}</h5>
-                </div>
-                <div css={productTileContent}>
-                    <Link to="/view" state={props.product} css={productTileLink}>View Item ></Link>
-                </div>
+            <div css={[productTileContent, productTileHeader]}>
+                <h4>{gender}</h4>
+            </div>
+            <div css={[productTileContent, productTilePrice]}>
+                <h5>${price}</h5>
+            </div>
+            <div css={productTileContent}>
+                <Link to="/view" state={props.product} css={productTileLink}>View Item ></Link>
+            </div>
 
         </div>
     );

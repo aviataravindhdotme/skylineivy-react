@@ -4,9 +4,8 @@ import {css, jsx} from '@emotion/core';
 import StarRating from "react-svg-star-rating";
 import Featured from "./Shared/Featured";
 import {CartContext} from "../Context";
-import NumericInput from 'react-numeric-input';
 
-const ViewItem = (props) =>{
+const ViewItem = (props) => {
 
     const {state, dispatch} = useContext(CartContext);
     const [itemCount, setItemCount] = useState(0);
@@ -14,30 +13,30 @@ const ViewItem = (props) =>{
     const {id, img, name, description, color, starrating, price, review} = props.location.state;
 
 
-    useEffect(()=>{
-        window.scroll(0,0);
-    },[props.location.state]);
+    useEffect(() => {
+        window.scroll(0, 0);
+    }, [props.location.state]);
 
 
-function decreaseCartCount() {
-    setItemCount(itemCount-1>0?itemCount-1:0);
-    // dispatch({type:"Remove", payload:{id: id, count:1}});
-}
+    function decreaseCartCount() {
+        setItemCount(itemCount - 1 > 0 ? itemCount - 1 : 0);
+        // dispatch({type:"Remove", payload:{id: id, count:1}});
+    }
 
-function increaseCartCount(){
-    setItemCount(itemCount+1);
+    function increaseCartCount() {
+        setItemCount(itemCount + 1);
 
-    // dispatch({type:"Add" , payload:{id: id, count:1}});
-}
+        // dispatch({type:"Add" , payload:{id: id, count:1}});
+    }
 
-function tempCountChange(e){
+    function tempCountChange(e) {
 
-}
+    }
 
-function updateCart() {
-    console.log("update");
-    dispatch({type:"update", payload:{id:id, count:itemCount}});
-}
+    function updateCart() {
+
+        dispatch({type: "update", payload: {id: id, count: itemCount}});
+    }
 
 
     return (
@@ -63,13 +62,13 @@ function updateCart() {
                         <button css={counterButton} onClick={decreaseCartCount}>-</button>
 
                         <input type="text" value={itemCount} css={counterInput}
-                               onChange={e=> tempCountChange(e)} />
+                               onChange={e => tempCountChange(e)}/>
                         <button css={counterButton} onClick={increaseCartCount}>+</button>
 
                     </div>
                     <p>Available in additional colors:<strong> {color}</strong></p>
 
-                    <button css={productButton} onClick={updateCart}>Add to cart</button>
+                    <button disabled={itemCount==0} css={productButton} onClick={updateCart}>Update Cart</button>
                 </div>
             </div>
             <div css={reviewContainer}>
@@ -90,7 +89,7 @@ function updateCart() {
     );
 }
 
-const viewItemContainer=css`
+const viewItemContainer = css`
     width:80vw;
     margin-left:7vw;
     margin-top:75px;
@@ -100,17 +99,17 @@ const viewItemContainer=css`
     justify-content:center;
     `;
 
-const imageContainer=css`
+const imageContainer = css`
 
     `;
 
-const detailsContainer=css`
+const detailsContainer = css`
      *{
      margin-bottom:20px;
      
      }
     `;
-const productPrice=css`
+const productPrice = css`
     line-height:1.4;
     word-spacing:1px;
     color:#d96528;
@@ -129,7 +128,7 @@ const productButton = css`
     background-color:#c14103;
     `;
 
-const reviewContainer = css `
+const reviewContainer = css`
     width:80vw;
     margin-left:10vw;
     *{
@@ -137,12 +136,12 @@ const reviewContainer = css `
     }
     `;
 
-const counterContainer=css`
+const counterContainer = css`
     display:flex;
     `;
 
 
-const counterButton=css`
+const counterButton = css`
     width:45px;
     height:45px;
     display:flex;
@@ -154,7 +153,7 @@ const counterButton=css`
     border:none;
     `
 
-const counterInput=css`
+const counterInput = css`
     width:65px;
     height:45px;
     margin:0px 10px;
