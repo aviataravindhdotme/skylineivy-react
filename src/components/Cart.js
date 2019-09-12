@@ -4,6 +4,7 @@ import { css, jsx } from "@emotion/core";
 import { CartContext } from "../Context";
 import StoreData from "../../storedata";
 import StarRating from "react-svg-star-rating";
+import {Link} from "@reach/router";
 
 const Cart = () => {
   const { state, dispatch } = useContext(CartContext);
@@ -13,25 +14,28 @@ const Cart = () => {
 
   function decreaseCartCount(id) {
     document.getElementById(id).value--;
-
-    if(state.cartItems.find(x=> x.id === id).count != document.getElementById(id).value){
-      setCountUpdated(true);
-    }else{
-      setCountUpdated(false);
-    }
+    dispatch({ type: "update", payload: { id: id, count: Number(document.getElementById(id).value) } });
+    // if(state.cartItems.find(x=> x.id === id).count != document.getElementById(id).value){
+    //   setCountUpdated(true);
+    // }else{
+    //   setCountUpdated(false);
+    // }
 
   }
 
   function increaseCartCount(id) {
    document.getElementById(id).value++;
-    if(state.cartItems.find(x=> x.id === id).count != document.getElementById(id).value){
-      setCountUpdated(true);
-    }else{
-      setCountUpdated(false);
-    }
+    dispatch({ type: "update", payload: { id: id, count: Number(document.getElementById(id).value) } });
+    // if(state.cartItems.find(x=> x.id === id).count !== document.getElementById(id).value){
+    //   setCountUpdated(true);
+    // }else{
+    //   setCountUpdated(false);
+    //
   }
 
-  function tempCountChange(e) {}
+  function tempCountChange(e) {
+
+  }
 
   function updateCart() {
     dispatch({ type: "update", payload: { id: id, count: itemCount } });
@@ -97,7 +101,7 @@ const Cart = () => {
                       <button css={counterButton} onClick={()=>increaseCartCount(item.id)}>
                         +
                       </button>
-                      {(countUpdated) && <div>Update</div>}
+
                     </div>
                   </div>
                   <div css={totalContainer}>
@@ -110,22 +114,23 @@ const Cart = () => {
 
         <div css={totalRow}>
           <div>Sub-Total: </div>
-          <div>${tempTotal}</div>
+          <div>${tempTotal.toFixed(2)}</div>
         </div>
 
         <div css={totalRow}>
           <div>Shipping: </div>
-          <div>${tempShipping}</div>
+          <div>${tempShipping.toFixed(2)}</div>
         </div>
 
         <div css={[totalRow, grandTotal]}>
           <div>Total: </div>
-          <div>${tempTotal + tempShipping}</div>
+          <div>${(tempTotal + tempShipping).toFixed(2)}</div>
         </div>
-
-        <button css={productButton} onClick={updateCart}>
+  <div css={buttonRow}>
+        <Link to="/Checkout"> <button css={productButton} onClick={updateCart}>
           Checkout
-        </button>
+        </button></Link>
+  </div>
       </div>
     </div>
   );
@@ -255,6 +260,7 @@ const productButton = css`
     color:white;
     display:flex;
     justify-content:center;
+    text-transform:uppercase;
     align-items:center;
     border:none;
     height:40px;
@@ -263,4 +269,10 @@ const productButton = css`
     background-color:#c14103;
     `;
 
+const buttonRow = css`
+width: 85%;
+  margin: 40px 0px;
+display:flex;
+  justify-content: flex-end;
+`;
 export default Cart;

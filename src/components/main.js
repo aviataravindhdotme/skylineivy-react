@@ -6,6 +6,7 @@ import Home from "./Home/home";
 import All from "./All/All";
 import ViewItem from "./ViewItem";
 import Cart from "./Cart";
+import Checkout from "./Checkout";
 
 const mainContainer = css`
   width: 100vw;
@@ -23,6 +24,7 @@ class Main extends React.Component {
           <All path="Women" gender="Female" />
           <ViewItem path="view" />
           <Cart path="Cart" />
+          <Checkout path="Checkout" />
         </Router>
       </div>
     );
