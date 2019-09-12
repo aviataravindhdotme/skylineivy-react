@@ -12,12 +12,14 @@
     "@emotion/babel-preset-css-prop": "^10.0.14",
     "@emotion/core": "^10.0.16",
     "@reach/router": "^1.2.1",
+    "F": "0.0.4",
     "babel-plugin-emotion": "^10.0.16",
     "babel-plugin-styled-components": "^1.10.6",
     "babel-plugin-transform-inline-environment-variables": "^0.4.3",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "eslint-plugin-react-hooks": "^2.0.1",
+    "formik": "^1.5.8",
     "parcel-bundler": "^1.12.3",
     "react": "^16.9.0",
     "react-bootstrap": "^1.0.0-beta.12",
@@ -25,7 +27,8 @@
     "react-numeric-input": "^2.2.3",
     "react-rangeslider": "^2.2.0",
     "react-svg-star-rating": "^1.0.2",
-    "styled-components": "^4.3.2"
+    "styled-components": "^4.3.2",
+    "yup": "^0.27.0"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",

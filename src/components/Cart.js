@@ -4,7 +4,7 @@ import { css, jsx } from "@emotion/core";
 import { CartContext } from "../Context";
 import StoreData from "../../storedata";
 import StarRating from "react-svg-star-rating";
-import {Link} from "@reach/router";
+import { Link } from "@reach/router";
 
 const Cart = () => {
   const { state, dispatch } = useContext(CartContext);
@@ -14,28 +14,21 @@ const Cart = () => {
 
   function decreaseCartCount(id) {
     document.getElementById(id).value--;
-    dispatch({ type: "update", payload: { id: id, count: Number(document.getElementById(id).value) } });
-    // if(state.cartItems.find(x=> x.id === id).count != document.getElementById(id).value){
-    //   setCountUpdated(true);
-    // }else{
-    //   setCountUpdated(false);
-    // }
-
+    dispatch({
+      type: "update",
+      payload: { id: id, count: Number(document.getElementById(id).value) }
+    });
   }
 
   function increaseCartCount(id) {
-   document.getElementById(id).value++;
-    dispatch({ type: "update", payload: { id: id, count: Number(document.getElementById(id).value) } });
-    // if(state.cartItems.find(x=> x.id === id).count !== document.getElementById(id).value){
-    //   setCountUpdated(true);
-    // }else{
-    //   setCountUpdated(false);
-    //
+    document.getElementById(id).value++;
+    dispatch({
+      type: "update",
+      payload: { id: id, count: Number(document.getElementById(id).value) }
+    });
   }
 
-  function tempCountChange(e) {
-
-  }
+  function tempCountChange(e) {}
 
   function updateCart() {
     dispatch({ type: "update", payload: { id: id, count: itemCount } });
@@ -87,21 +80,28 @@ const Cart = () => {
 
                   <div css={qtyContainer}>
                     <div css={counterContainer}>
-                      <button css={counterButton} onClick={()=> decreaseCartCount(item.id)}>
+                      <button
+                        css={counterButton}
+                        onClick={() => decreaseCartCount(item.id)}
+                      >
                         -
                       </button>
 
                       <input
                         id={tempItem.id}
                         type="text"
-                        value={state.cartItems.find(x=> x.id == tempItem.id).count}
+                        value={
+                          state.cartItems.find(x => x.id == tempItem.id).count
+                        }
                         css={counterInput}
                         onChange={e => tempCountChange(e)}
                       />
-                      <button css={counterButton} onClick={()=>increaseCartCount(item.id)}>
+                      <button
+                        css={counterButton}
+                        onClick={() => increaseCartCount(item.id)}
+                      >
                         +
                       </button>
-
                     </div>
                   </div>
                   <div css={totalContainer}>
@@ -126,11 +126,14 @@ const Cart = () => {
           <div>Total: </div>
           <div>${(tempTotal + tempShipping).toFixed(2)}</div>
         </div>
-  <div css={buttonRow}>
-        <Link to="/Checkout"> <button css={productButton} onClick={updateCart}>
-          Checkout
-        </button></Link>
-  </div>
+        <div css={buttonRow}>
+          <Link to="/Checkout">
+            {" "}
+            <button css={productButton} onClick={updateCart}>
+              Checkout
+            </button>
+          </Link>
+        </div>
       </div>
     </div>
   );
@@ -261,18 +264,20 @@ const productButton = css`
     display:flex;
     justify-content:center;
     text-transform:uppercase;
+    
     align-items:center;
     border:none;
     height:40px;
     width:120px;
     :hover{
     background-color:#c14103;
+    text-decoration:none;
     `;
 
 const buttonRow = css`
-width: 85%;
+  width: 85%;
   margin: 40px 0px;
-display:flex;
+  display: flex;
   justify-content: flex-end;
 `;
 export default Cart;
