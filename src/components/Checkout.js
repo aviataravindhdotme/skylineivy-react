@@ -1,20 +1,18 @@
 /** @jsx jsx */
-import React from "react";
+import React, { useState } from "react";
 import { css, jsx } from "@emotion/core";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import AlgoliaPlaces from "algolia-places-react";
 
-const checkOutSchema = Yup.object().shape({
+const userInformationSchema = Yup.object().shape({
   name: Yup.string().required("Name is required"),
-  email: Yup.string().email("Invalid email"),
-  street1: Yup.string().required("Required"),
-  street2: Yup.string(),
-  city: Yup.string().required("Required"),
-  zipCode: Yup.number()
-    .min(5, "Invalid zip code")
-    .max(5, "Invalid zip code")
-    .required("Required"),
+  email: Yup.string()
+    .email("Invalid email")
+    .required("Email is required")
+});
 
+const cardSchema = Yup.object().shape({
   cardNumber1: Yup.number()
     .min(4, "Enter 4 digits here")
     .max(4, "Enter 4 digits here")
@@ -46,36 +44,146 @@ const checkOutSchema = Yup.object().shape({
 });
 
 const Checkout = () => {
+  const [loadAddress, setLoadAddress] = useState(false);
+  const [loadShippingAddress, setLoadShippingAddress] = useState(false);
+  const [loadPaymentInfo, setLoadPaymentInfo] = useState(false);
+  const [shippingAddressDifferent, setShippingAddressDifferent] = useState(
+    false
+  );
+  const [billName, setBillName] = useState("");
+  const [billEmail, setBillEmail] = useState(" ");
+  const [billAddress, setBillAddress] = useState({
+    street: "",
+    city: "",
+    state: "",
+    zip: ""
+  });
+
+  const handleBillAddressChange = ({
+    name,
+    administrative,
+    city,
+    postcode
+  }) => {
+    setBillAddress({
+      street: name,
+      city: city,
+      state: administrative,
+      zip: postcode
+    });
+    setShippingAddressDifferent(true);
+
+    console.log(billAddress);
+  };
+
+  const handleShippingAddress = value => {
+    // setLoadShippingAddress(value);
+  };
+
   return (
     <div css={checkoutContainer}>
-      <Formik
-        initialValues={{ firstName: "First Name" }}
-        onSubmit={() => {
-          console.log("Submitted");
-        }}
-        validationSchema={checkOutSchema}
-        render={props => (
-          <Form css={formContainer} onSubmit={props.handleSubmit}>
-            <div css={formInput}>
-              <div css={[inputLabel]}>Your Name </div>
-              <Field css={formField} name="name" />
-              <ErrorMessage name="name" render={msg => <div>{msg}</div>} />
-            </div>
+      <div>
+        <Formik
+          initialValues={{
+            name: billName,
+            email: " "
+          }}
+          onSubmit={(values, actions) => {
+            console.log("submit");
+            console.log(values);
+            setBillName(values.name);
+            setBillEmail(values.email);
+            setLoadAddress(true);
+          }}
+          // validationSchema={userInformationSchema}
+          render={props => (
+            <Form css={formContainer} onSubmit={props.handleSubmit}>
+              <div css={formInput}>
+                <div css={inputLabel}>Name</div>
+                <Field css={formField} name="name" />
+              </div>
 
-            <div css={formInput}>
-              <div css={inputLabel}>Your Email </div>
-              <Field css={formField} name="email" />
-              <ErrorMessage name="email" render={msg => <div>{msg}</div>} />
-            </div>
+              <div css={formInput}>
+                <div css={inputLabel}>Email</div>
+                <Field css={formField} name="email" />
+              </div>
 
+              <div css={formInput}>
+                <ErrorMessage
+                  name="name"
+                  render={msg => <div css={inputError}>{msg}</div>}
+                />
+              </div>
 
+              <div css={formInput}>
+                <ErrorMessage
+                  name="email"
+                  render={msg => <div css={inputError}>{msg}</div>}
+                />
+              </div>
 
-            <button css={productButton} type="submit">Pay</button>
-          </Form>
+              <button css={productButton} type="submit">
+                Next
+              </button>
+            </Form>
+          )}
+        />
+
+        {loadAddress && (
+          <div css={algoliaContainer}>
+            <AlgoliaPlaces
+              placeholder="Billing Address"
+              options={{ type: "address" }}
+              onChange={({ suggestion }) => {
+                handleBillAddressChange(suggestion);
+              }}
+            />
+
+            {shippingAddressDifferent && (
+              <div css={shippingContainer}>
+                Is your shipping address different?{" "}
+                <button
+                  css={shippingButton}
+                  onClick={() => {
+                    setLoadShippingAddress(true);
+                    setLoadPaymentInfo(false);
+                  }}
+                >
+                  Yes
+                </button>
+                <button
+                  css={shippingButton}
+                  onClick={() => {
+                    setLoadShippingAddress(false);
+                    setLoadPaymentInfo(true);
+                  }}
+                >
+                  No
+                </button>
+              </div>
+            )}
+
+            {loadShippingAddress && (
+              <div css={algoliaContainer}>
+                <AlgoliaPlaces
+                  placeholder="Shipping Address"
+                  options={{ type: "address" }}
+                  onChange={({ suggestion }) => {
+                    handleBillAddressChange(suggestion);
+                    setLoadPaymentInfo(true);
+                  }}
+                />
+              </div>
+            )}
+          </div>
         )}
-      />
 
-      <div>you have 2 items in your cart sub-total shipping total</div>
+        {loadPaymentInfo && <div css={formContainer}>Payment Fields</div>}
+      </div>
+
+      <div>
+        Cart Summary: you have 2 items in your cart sub-total shipping total
+      </div>
     </div>
   );
 };
@@ -90,34 +198,29 @@ const checkoutContainer = css`
 `;
 
 const formContainer = css`
-  width: 80%;
+  width: 100%;
   margin-left: 10%;
   margin-top: 50px;
   display: grid;
-  grid-template-columns: 100%;
+  grid-template-columns: 50% 50%;
   grid-row-gap: 20px;
   justify-content: center;
   align-content: center;
   font-size: 1.17rem;
 `;
 const formInput = css`
-margin-bottom:10px;
   display: grid;
   grid-template-columns: 100%;
   grid-row-gap: 10px;
   align-items: center;
+  transition: * 1s;
   font-family: Montserrat, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
     Helvetica Neue, Arial, sans-serif;
 `;
 
-const inputLabel = css`
- ;
-`;
+const inputLabel = css``;
 
-const requiredField=css`
-
-
-`
+const requiredField = css``;
 
 const formField = css`
   width: 75%;
@@ -134,7 +237,7 @@ const productButton = css`
     display:flex;
     justify-content:center;
     text-transform:uppercase;
-    
+
     align-items:center;
     border:none;
     height:40px;
@@ -143,5 +246,41 @@ const productButton = css`
     background-color:#c14103;
     text-decoration:none;
     `;
+
+const inputError = css`
+  color: red;
+  font-size: 0.75rem;
+`;
+
+const algoliaContainer = css`
+  width: 80%;
+  margin-left: 10%;
+  margin-top: 25px;
+`;
+
+const shippingContainer = css`
+  width: 100%;
+  margin-top: 25px;
+  display: grid;
+  grid-template-columns: 45% 15% 15% 1fr;
+  align-items: center;
+  font-size: 1.25rem;
+`;
+
+const shippingButton = css`
+  width: 120px;
+  height: 80px;
+  margin-right: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: none;
+  border: 1px solid #eee;
+  font-weight: bold;
+  :hover {
+    background: #eee;
+  }
+`;
 
 export default Checkout;
