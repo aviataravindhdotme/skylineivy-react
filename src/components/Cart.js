@@ -2,6 +2,7 @@
 import React, { useContext, useState } from "react";
 import { css, jsx } from "@emotion/core";
 import { CartContext } from "../Context";
+import Usp from "./Home/usp";
 import StoreData from "../../storedata";
 import StarRating from "react-svg-star-rating";
 import { Link } from "@reach/router";
@@ -135,6 +136,7 @@ const Cart = () => {
           </Link>
         </div>
       </div>
+      <Usp />
     </div>
   );
 };
@@ -230,14 +232,14 @@ const counterButton = css`
   align-items: center;
   color: white;
   font-weight: 400;
-  background-color: #000;
-  border: none;
+  background-color: #ccc;
+  border: 1px solid #ccc;
 `;
 
 const counterInput = css`
   width: 45px;
   height: 30px;
-  margin: 0px 10px;
+
   text-align: center;
 `;
 
