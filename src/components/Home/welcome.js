@@ -1,7 +1,9 @@
 /** @jsx jsx */
-import React from "react";
-import { css, jsx } from "@emotion/core";
-import Shoe from "../../../public/shoe1.jpg";
+import { css, jsx } from '@emotion/core';
+
+import React from 'react';
+
+import Shoe from '../../../public/shoe1.jpg';
 // import Images from '../../../public';
 
 class Welcome extends React.Component {
@@ -19,13 +21,12 @@ class Welcome extends React.Component {
 }
 
 const welcomeContainer = css`
-  width: 80vw;
+  width: 100vw;
   justify-content: center;
-  margin-left: 10vw;
   display: grid;
-  grid-template-columns: 50px 100px 1fr;
+
   grid-template-rows: 50px 50px 100px 20px 1fr;
-  font-family: "PT Serif", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+  font-family: 'PT Serif', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
     Helvetica Neue, Arial, sans-serif;
 `;
 
