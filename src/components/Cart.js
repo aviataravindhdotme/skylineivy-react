@@ -3,7 +3,7 @@ import { css, jsx } from '@emotion/core';
 
 import { Link } from '@reach/router';
 
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 
 import StarRating from 'react-svg-star-rating';
 
@@ -14,9 +14,19 @@ import Usp from './Home/usp';
 
 const Cart = () => {
   const { state, dispatch } = useContext(CartContext);
-  const [storeData, setStoreData] = useState(getStoreData());
+  const [storeData, setStoreData] = useState();
   const [itemCount, setItemCount] = useState(0);
   const [countUpdated, setCountUpdated] = useState(false);
+
+  useEffect(() => {
+    getStoreData()
+      .then((res) => {
+        setStoreData(res);
+      })
+      .catch((err) => {
+        throw err;
+      });
+  }, []);
 
   function decreaseCartCount(id) {
     document.getElementById(id).value--;
@@ -46,102 +56,105 @@ const Cart = () => {
     tempShipping = 0;
   const imgApi =
     'https://res.cloudinary.com/du7a4xfua/image/upload/v1567100881/';
-  console.log(storeData);
 
-  console.log(JSON.stringify(state));
   return (
     <div>
-      <div css={cartContainer}>
-        <div css={headerRow}>
-          <h1>Your Cart</h1>
-          <p>You have {state.cartTotal} items in your cart</p>
-        </div>
-        <div css={titleRow}>
-          <div>Product</div>
-          <div>Quantity</div>
-          <div>Sub-Total</div>
-        </div>
-        {state.cartTotal === 0 && <h3>No Items to display</h3>}
-        {state.cartTotal > 0 &&
-          state.cartItems.map((item) => {
-            [tempItem] = storeData.filter((i) => i.id === item.id);
-            tempTotal += item.count * tempItem.price;
-            return (
-              <div key={item.id}>
-                <div css={cartRow}>
-                  <div css={itemContainer}>
-                    <div css={imageContainer}>
-                      <img
-                        height='50px'
-                        src={imgApi + tempItem.img}
-                        alt='Product Image'
-                      />
-                    </div>
-                    <div>
-                      <h5>{tempItem.name}</h5>
-                      <p>{tempItem.color}</p>
-                      <div css={priceText}>${tempItem.price}</div>
+      {storeData && (
+        <div>
+          <div css={cartContainer}>
+            <div css={headerRow}>
+              <h1>Your Cart</h1>
+              <p>You have {state.cartTotal} items in your cart</p>
+            </div>
+            <div css={titleRow}>
+              <div>Product</div>
+              <div>Quantity</div>
+              <div>Sub-Total</div>
+            </div>
+            {state.cartTotal === 0 && <h3>No Items to display</h3>}
+            {state.cartTotal > 0 &&
+              state.cartItems.map((item) => {
+                [tempItem] = storeData.filter((i) => i.id === item.id);
+                tempTotal += item.count * tempItem.price;
+                return (
+                  <div key={item.id}>
+                    <div css={cartRow}>
+                      <div css={itemContainer}>
+                        <div css={imageContainer}>
+                          <img
+                            height='50px'
+                            src={imgApi + tempItem.img}
+                            alt='Product Image'
+                          />
+                        </div>
+                        <div>
+                          <h5>{tempItem.name}</h5>
+                          <p>{tempItem.color}</p>
+                          <div css={priceText}>${tempItem.price}</div>
+                        </div>
+                      </div>
+
+                      <div css={qtyContainer}>
+                        <div css={counterContainer}>
+                          <button
+                            css={counterButton}
+                            onClick={() => decreaseCartCount(item.id)}
+                          >
+                            -
+                          </button>
+
+                          <input
+                            id={tempItem.id}
+                            type='text'
+                            value={
+                              state.cartItems.find((x) => x.id == tempItem.id)
+                                .count
+                            }
+                            css={counterInput}
+                            onChange={(e) => tempCountChange(e)}
+                          />
+                          <button
+                            css={counterButton}
+                            onClick={() => increaseCartCount(item.id)}
+                          >
+                            +
+                          </button>
+                        </div>
+                      </div>
+                      <div css={totalContainer}>
+                        <h5>${(item.count * tempItem.price).toFixed(2)}</h5>
+                      </div>
                     </div>
                   </div>
+                );
+              })}
 
-                  <div css={qtyContainer}>
-                    <div css={counterContainer}>
-                      <button
-                        css={counterButton}
-                        onClick={() => decreaseCartCount(item.id)}
-                      >
-                        -
-                      </button>
+            <div css={totalRow}>
+              <div>Sub-Total: </div>
+              <div>${tempTotal.toFixed(2)}</div>
+            </div>
 
-                      <input
-                        id={tempItem.id}
-                        type='text'
-                        value={
-                          state.cartItems.find((x) => x.id == tempItem.id).count
-                        }
-                        css={counterInput}
-                        onChange={(e) => tempCountChange(e)}
-                      />
-                      <button
-                        css={counterButton}
-                        onClick={() => increaseCartCount(item.id)}
-                      >
-                        +
-                      </button>
-                    </div>
-                  </div>
-                  <div css={totalContainer}>
-                    <h5>${(item.count * tempItem.price).toFixed(2)}</h5>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
+            <div css={totalRow}>
+              <div>Shipping: </div>
+              <div>${tempShipping.toFixed(2)}</div>
+            </div>
 
-        <div css={totalRow}>
-          <div>Sub-Total: </div>
-          <div>${tempTotal.toFixed(2)}</div>
+            <div css={[totalRow, grandTotal]}>
+              <div>Total: </div>
+              <div>${(tempTotal + tempShipping).toFixed(2)}</div>
+            </div>
+            <div css={buttonRow}>
+              <Link to='/Checkout'>
+                {' '}
+                <button css={productButton} onClick={updateCart}>
+                  Checkout
+                </button>
+              </Link>
+            </div>
+          </div>
+          <Usp />
         </div>
-
-        <div css={totalRow}>
-          <div>Shipping: </div>
-          <div>${tempShipping.toFixed(2)}</div>
-        </div>
-
-        <div css={[totalRow, grandTotal]}>
-          <div>Total: </div>
-          <div>${(tempTotal + tempShipping).toFixed(2)}</div>
-        </div>
-        <div css={buttonRow}>
-          <Link to='/Checkout'>
-            {' '}
-            <button css={productButton} onClick={updateCart}>
-              Checkout
-            </button>
-          </Link>
-        </div>
-      </div>
-      <Usp />
+      )}
     </div>
   );
 };

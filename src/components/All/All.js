@@ -35,11 +35,27 @@ const filterContentSlider = css`
 `;
 
 const All = (props) => {
-  const [storeData, setStoreData] = useState(getStoreData());
+  const [storeData, setStoreData] = useState();
 
-  const [priceRange, setPriceRange] = useState(
-    Math.max(...storeData.map((s) => s.price))
-  );
+  const [priceRange, setPriceRange] = useState();
+
+  useEffect(() => {
+    getStoreData()
+      .then((res) => {
+        setStoreData(res);
+      })
+      .catch((err) => {
+        throw err;
+      });
+  }, []);
+
+  useEffect(() => {
+    storeData && setPriceRange(Math.max(...storeData.map((s) => s.price)));
+  }, [storeData]);
+
+  useEffect(() => {
+    storeData && onSliderChange(Math.max(...storeData.map((s) => s.price)));
+  }, [props.gender]);
 
   function onSliderChange(value) {
     setPriceRange(value);
@@ -49,20 +65,17 @@ const All = (props) => {
     return '$' + value;
   }
 
-  useEffect(() => {
-    onSliderChange(Math.max(...storeData.map((s) => s.price)));
-  }, [props.gender]);
-
   return (
     <div css={allContainer}>
       <div css={productsContainer}>
-        {storeData.map((p) => {
-          if (props.gender === 'All' && p.price <= priceRange) {
-            return <ProductTile product={p} key={p.id} />;
-          } else if (p.gender === props.gender && p.price <= priceRange) {
-            return <ProductTile product={p} key={p.id} />;
-          }
-        })}
+        {storeData &&
+          storeData.map((p) => {
+            if (props.gender === 'All' && p.price <= priceRange) {
+              return <ProductTile product={p} key={p.id} />;
+            } else if (p.gender === props.gender && p.price <= priceRange) {
+              return <ProductTile product={p} key={p.id} />;
+            }
+          })}
       </div>
 
       <div css={filterContainer}>

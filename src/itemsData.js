@@ -389,7 +389,14 @@ const sd = [
   },
 ];
 const getStoreData = () => {
-  return sd;
+  let promise = new Promise((resolve, reject) => {
+    resolve(sd);
+  });
+
+  return promise;
+  setTimeout(() => {
+    return sd;
+  }, 5000);
 };
 
 export default getStoreData;

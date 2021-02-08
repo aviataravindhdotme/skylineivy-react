@@ -52,9 +52,22 @@ class Featured extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      storeData: getStoreData(),
+      storeData: '',
     };
   }
+
+  componentDidMount() {
+    getStoreData()
+      .then((res) => {
+        this.setState({
+          storeData: res,
+        });
+      })
+      .catch((err) => {
+        throw err;
+      });
+  }
+
   render() {
     return (
       <div css={featuredContainer}>
@@ -65,11 +78,12 @@ class Featured extends React.Component {
         </div>
 
         <div css={featuredItemsRow}>
-          {this.state.storeData.map((p) => {
-            if (p.fav) {
-              return <ProductTile product={p} key={p.id} />;
-            }
-          })}
+          {this.state.storeData &&
+            this.state.storeData.map((p) => {
+              if (p.fav) {
+                return <ProductTile product={p} key={p.id} />;
+              }
+            })}
         </div>
       </div>
     );
