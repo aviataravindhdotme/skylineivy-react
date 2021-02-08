@@ -1,11 +1,14 @@
 /** @jsx jsx*/
 
-import React, { useState, useEffect } from "react";
-import { css, jsx } from "@emotion/core";
-import StoreData from "../../../storedata";
-import ProductTile from "../Shared/productTile";
-import Slider from "react-rangeslider";
-import "react-rangeslider/lib/index.css";
+import { css, jsx } from '@emotion/core';
+
+import React, { useState, useEffect } from 'react';
+
+import Slider from 'react-rangeslider';
+import 'react-rangeslider/lib/index.css';
+
+import getStoreData from '../../itemsData';
+import ProductTile from '../Shared/productTile';
 
 const allContainer = css`
   width: 80vw;
@@ -31,11 +34,11 @@ const filterContentSlider = css`
   border: 1px solid green;
 `;
 
-const All = props => {
-  const [storeData, setStoreData] = useState(StoreData);
+const All = (props) => {
+  const [storeData, setStoreData] = useState(getStoreData());
 
   const [priceRange, setPriceRange] = useState(
-    Math.max(...StoreData.map(s => s.price))
+    Math.max(...storeData.map((s) => s.price))
   );
 
   function onSliderChange(value) {
@@ -43,18 +46,18 @@ const All = props => {
   }
 
   function formatPriceRange(value) {
-    return "$" + value;
+    return '$' + value;
   }
 
   useEffect(() => {
-    onSliderChange(Math.max(...StoreData.map(s => s.price)));
+    onSliderChange(Math.max(...storeData.map((s) => s.price)));
   }, [props.gender]);
 
   return (
     <div css={allContainer}>
       <div css={productsContainer}>
-        {storeData.map(p => {
-          if (props.gender === "All" && p.price <= priceRange) {
+        {storeData.map((p) => {
+          if (props.gender === 'All' && p.price <= priceRange) {
             return <ProductTile product={p} key={p.id} />;
           } else if (p.gender === props.gender && p.price <= priceRange) {
             return <ProductTile product={p} key={p.id} />;

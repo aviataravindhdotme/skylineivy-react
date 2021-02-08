@@ -1,38 +1,43 @@
 /** @jsx jsx */
-import React, { useContext, useState } from "react";
-import { css, jsx } from "@emotion/core";
-import { CartContext } from "../Context";
-import Usp from "./Home/usp";
-import StoreData from "../../storedata";
-import StarRating from "react-svg-star-rating";
-import { Link } from "@reach/router";
+import { css, jsx } from '@emotion/core';
+
+import { Link } from '@reach/router';
+
+import React, { useContext, useState } from 'react';
+
+import StarRating from 'react-svg-star-rating';
+
+import { CartContext } from '../Context';
+import getStoreData from '../itemsData';
+
+import Usp from './Home/usp';
 
 const Cart = () => {
   const { state, dispatch } = useContext(CartContext);
-  const [storeData, setStoreData] = useState(StoreData);
+  const [storeData, setStoreData] = useState(getStoreData());
   const [itemCount, setItemCount] = useState(0);
   const [countUpdated, setCountUpdated] = useState(false);
 
   function decreaseCartCount(id) {
     document.getElementById(id).value--;
     dispatch({
-      type: "update",
-      payload: { id: id, count: Number(document.getElementById(id).value) }
+      type: 'update',
+      payload: { id: id, count: Number(document.getElementById(id).value) },
     });
   }
 
   function increaseCartCount(id) {
     document.getElementById(id).value++;
     dispatch({
-      type: "update",
-      payload: { id: id, count: Number(document.getElementById(id).value) }
+      type: 'update',
+      payload: { id: id, count: Number(document.getElementById(id).value) },
     });
   }
 
   function tempCountChange(e) {}
 
   function updateCart() {
-    dispatch({ type: "update", payload: { id: id, count: itemCount } });
+    dispatch({ type: 'update', payload: { id: id, count: itemCount } });
   }
 
   let tempItem,
@@ -40,7 +45,7 @@ const Cart = () => {
     tempTotal = 0,
     tempShipping = 0;
   const imgApi =
-    "https://res.cloudinary.com/du7a4xfua/image/upload/v1567100881/";
+    'https://res.cloudinary.com/du7a4xfua/image/upload/v1567100881/';
   console.log(storeData);
 
   console.log(JSON.stringify(state));
@@ -58,8 +63,8 @@ const Cart = () => {
         </div>
         {state.cartTotal === 0 && <h3>No Items to display</h3>}
         {state.cartTotal > 0 &&
-          state.cartItems.map(item => {
-            [tempItem] = storeData.filter(i => i.id === item.id);
+          state.cartItems.map((item) => {
+            [tempItem] = storeData.filter((i) => i.id === item.id);
             tempTotal += item.count * tempItem.price;
             return (
               <div key={item.id}>
@@ -67,9 +72,9 @@ const Cart = () => {
                   <div css={itemContainer}>
                     <div css={imageContainer}>
                       <img
-                        height="50px"
+                        height='50px'
                         src={imgApi + tempItem.img}
-                        alt="Product Image"
+                        alt='Product Image'
                       />
                     </div>
                     <div>
@@ -90,12 +95,12 @@ const Cart = () => {
 
                       <input
                         id={tempItem.id}
-                        type="text"
+                        type='text'
                         value={
-                          state.cartItems.find(x => x.id == tempItem.id).count
+                          state.cartItems.find((x) => x.id == tempItem.id).count
                         }
                         css={counterInput}
-                        onChange={e => tempCountChange(e)}
+                        onChange={(e) => tempCountChange(e)}
                       />
                       <button
                         css={counterButton}
@@ -128,8 +133,8 @@ const Cart = () => {
           <div>${(tempTotal + tempShipping).toFixed(2)}</div>
         </div>
         <div css={buttonRow}>
-          <Link to="/Checkout">
-            {" "}
+          <Link to='/Checkout'>
+            {' '}
             <button css={productButton} onClick={updateCart}>
               Checkout
             </button>
